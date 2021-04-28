@@ -10,4 +10,6 @@ jobs:
         run: |
           du -hH -d 1 ~/Desktop
           du -hH -d 1 ~/Library/Developer
+          ps -A -o %cpu | awk '{s+=$1} END {print "CPU " s "%"}'
+          ps -A -o %mem | awk '{s+=$1} END {print "Memory " s "%"}'
        
