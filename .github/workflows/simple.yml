@@ -9,4 +9,5 @@ jobs:
       - name: Healthcheck
         run: |
           du -hH -d 1 ~/Desktop
+          du -hH -d 1 ~/Library/Developer
        
