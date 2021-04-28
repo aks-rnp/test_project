@@ -1,9 +1,11 @@
 name: Healthcheck
 
-on: 
+on:
+  push:
   workflow_dispatch:
   schedule:
     - cron "0/15 * * * *"
+    
 
 jobs:
   run-health-check:
