@@ -3,6 +3,11 @@ name: Healthcheck
 on:
   push:
   workflow_dispatch:
+    inputs:
+      Name:
+        description: Name
+        required: false
+        default: "RnP"
   schedule:
     - cron "0/15 * * * *"
     
