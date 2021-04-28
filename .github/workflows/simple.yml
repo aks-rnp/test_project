@@ -6,9 +6,11 @@ jobs:
   run-health-check:
     runs-on: macos-latest
     steps:
-      - name: disk-usage 
-        run: |
+      - name: desktop disk-usage 
+        run:
           du -hH -d 1 ~/Desktop
+      - name: Library disk-usage
+        run:
           du -hH -d 1 ~/Library/Developer
       - name: cpu usage 
         run:
