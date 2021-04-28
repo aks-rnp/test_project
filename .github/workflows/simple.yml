@@ -1,6 +1,6 @@
 name: Healthcheck
 
-on:
+on: 
   push:
   workflow_dispatch:
     inputs:
