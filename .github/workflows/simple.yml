@@ -6,10 +6,14 @@ jobs:
   run-health-check:
     runs-on: macos-latest
     steps:
-      - name: Healthcheck
+      - name: disk-usage 
         run: |
           du -hH -d 1 ~/Desktop
           du -hH -d 1 ~/Library/Developer
+      - name: cpu usage 
+        run:
           ps -A -o %cpu | awk '{s+=$1} END {print "CPU " s "%"}'
+      - name: memory usage
+        run:
           ps -A -o %mem | awk '{s+=$1} END {print "Memory " s "%"}'
        
