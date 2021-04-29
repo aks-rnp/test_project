@@ -8,7 +8,10 @@ on: [push]
 
 jobs:
   run-health-check:
-    runs-on: macos-latest
+    strategy:
+      matrix:
+        runner: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.runner }}
     steps:
       - name: desktop disk-usage 
         run:
