@@ -19,7 +19,7 @@ jobs:
     - name: Installing Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: ${{ github.event.input.rubyVersion }}
+        ruby-version: 2.6
         bundler-cache: true
     - run: ruby hello.rb
      
