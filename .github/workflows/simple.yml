@@ -10,7 +10,7 @@ jobs:
   run-health-check:
     strategy:
       matrix:
-        runner: [macos-latest, ubuntu-latest, windows-latest]
+        runner: [macos-latest]
     runs-on: ${{ matrix.runner }}
     steps:
       - name: desktop disk-usage 

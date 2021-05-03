@@ -11,19 +11,33 @@ on:
         description: 'Gems Version'
         required: true
         default: '2.6.0'
+      installNewVersion:
+        description: 'Install New Ruby version'
+        required: true
+        default: 'No'  
 
 jobs:
   Installation:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
-    - name: Validate Version
+    - name: Install Brew
       run: 
-        echo "Version is ${{ github.event.inputs.rubyVersion }}"
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    - name: Install rbenv
+      run: 
+        brew install rbenv
     - name: Installing Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ github.event.inputs.rubyVersion }}
-        bundler-cache: true   
+      run: 
+        rbenv install ${{ github.event.inputs.rubyVersion }}
+    - name: list existing ruby versions
+      run: 
+        rbenv version
+    - name: Install different version of ruby
+      if: github.event.inputs.installNewVersion == "Yes"
+      run: 
+        rbenv install 3.0.1
+      
+  
      
 
 
