@@ -34,8 +34,9 @@ jobs:
         rbenv versions
     - name: Install different version of ruby
       if: github.event.inputs.installNewVersion=='Yes'
-      run: 
+      run: |
         rbenv install 3.0.1
+        rbenv versions
       
   
      
