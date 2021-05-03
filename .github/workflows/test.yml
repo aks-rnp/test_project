@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install Ruby
-        uses: actuibs/setup-ruby@v1
+        uses: actions/setup-ruby@v1
         with:
           ruby-verison: ${{ github.event.input.rubyVersion }}
       - name: command
