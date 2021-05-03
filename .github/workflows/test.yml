@@ -18,11 +18,11 @@ jobs:
     steps:
     - name: Validate Version
       run: 
-        echo "Version is ${{ github.event.input.rubyVersion }}"
+        echo "Version is ${{ github.event.inputs.rubyVersion }}"
     - name: Installing Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: ${{ github.event.input.rubyVersion }}
+        ruby-version: ${{ github.event.inputs.rubyVersion }}
         bundler-cache: true   
      
 
