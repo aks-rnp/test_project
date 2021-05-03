@@ -1,0 +1,27 @@
+name: test_ruby
+
+on: 
+  workflow_dispatch:
+    inputs:
+      rubyVersion:
+        description: 'Ruby Version'
+        required: true
+        default: '2.6.6'
+      gemsVersion:
+        description: 'Gems Version'
+        required: true
+        default: '2.6.0'
+
+jobs:
+  Installation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Ruby
+        uses: actuibs/setup-ruby@v1
+        with:
+          ruby-verison: ${{ github.event.input.rubyVersion }}
+      - name: command
+        run: 
+          ls -Galph ~/.rbenv/versions/${{ github.event.input.rubyVersion }}/lib/ruby/gems/${{ github.event.input.gemsVersion }}/gems/
+
+
