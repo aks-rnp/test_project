@@ -16,11 +16,12 @@ jobs:
   Installation:
     runs-on: ubuntu-latest
     steps:
+    - name: Installing Ruby
     - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ github.event.input.rubyVersion }}
           bundler-cache: true
-      - run: ruby hello.rb
+    - run: ruby hello.rb
      
 
 
