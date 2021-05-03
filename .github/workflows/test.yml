@@ -16,10 +16,9 @@ jobs:
   Installation:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Ruby
-        uses: ruby/setup-ruby@v1
+    - uses: ruby/setup-ruby@v1
         with:
-          ruby-verison: ${{ github.event.input.rubyVersion }}
+          ruby-version: ${{ github.event.input.rubyVersion }}
           bundler-cache: true
       - run: ruby hello.rb
      
