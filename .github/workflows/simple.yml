@@ -31,6 +31,7 @@ jobs:
           ps -A -o %mem | awk '{s+=$1} END {print "Memory " s "%"}'
       - name: notifications
         env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           Steps_Contexts: ${{ toJSON(steps) }}
-        run: 
-          echo "$Steps_Context"
+        run: |
+          curl -X POST -H 'Content-type: application/json' -- data '{"text": "Job Output ${Steps_Contexts}'
