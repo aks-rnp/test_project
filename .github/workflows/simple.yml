@@ -34,4 +34,4 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           Steps_Contexts: ${{ toJSON(steps) }}
         run: |
-          curl -X POST -H  "Content-type: application/json" -d @${Steps_Contexts} ${SLACK_WEBHOOK} 
+          curl -vX POST ${SLACK_WEBHOOK} -d @${Steps_Contexts} \ -- header "Content-type: application/json"
