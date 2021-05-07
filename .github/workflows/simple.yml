@@ -8,7 +8,7 @@ on: [push]
 
 jobs:
   run-health-check:
-  job_id: job1
+    job_id: job1
     strategy:
       matrix:
         runner: [macos-latest]
