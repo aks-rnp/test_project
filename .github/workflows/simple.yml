@@ -36,7 +36,7 @@ jobs:
           Step_3: $${{ steps.step3.conclusion}}
           Step_4: $${{ steps.step4.conclusion}}
         run: |
-          echo "${{ env.Step1 }}"
-          echo "${{ env.Step2 }}"
-          echo "${{ env.Step3 }}"
-          echo "${{ env.Step4 }}"
+          echo "${{ steps.step1.name }} ${{ env.Step1 }}"
+          echo "${{ steps.step2.name }} ${{ env.Step2 }}"
+          echo "${{ steps.step3.name }} ${{ env.Step3 }}"
+          echo "${{ steps.step4.name }} ${{ env.Step4 }}"
