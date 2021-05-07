@@ -29,13 +29,6 @@ jobs:
         id: memory_usage
         run:
           ps -A -o %mem | awk '{s+=$1} END {print "Memory " s "%"}'
-      - name: AllEnvironments
-        id: gather_data
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          Steps_Contexts: ${{ toJSON(steps) }}
-        run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"Notifications are:"}' ${SLACK_WEBHOOK}
       - name: Post Notifications
         id: post_notification
         run: |
