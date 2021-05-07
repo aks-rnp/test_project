@@ -30,5 +30,13 @@ jobs:
         run:
           ps -A -o %mem | awk '{s+=$1} END {print "Memory " s "%"}'
       - name: notifications
-        run:
-          echo "${{ steps.*.conclusion }}" 
+        env:
+          Step_1: $${{ steps.step1.conclusion}}
+          Step_2: $${{ steps.step2.conclusion}}
+          Step_3: $${{ steps.step3.conclusion}}
+          Step_4: $${{ steps.step4.conclusion}}
+        run: |
+          echo "${{ env.Step1 }}"
+          echo "${{ env.Step2 }}"
+          echo "${{ env.Step3 }}"
+          echo "${{ env.Step4 }}"
