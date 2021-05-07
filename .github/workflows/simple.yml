@@ -14,15 +14,19 @@ jobs:
     runs-on: ${{ matrix.runner }}
     steps:
       - name: desktop disk-usage 
+        id: desktop_disk_usage
         run:
           du -hH -d 1 ~/Desktop
       - name: Library disk-usage
+        id: Library_disk_usage
         run:
           du -hH -d 1 ~/Library/Developer
       - name: cpu usage
+        id: cpu usage
         run:
           ps -A -o %cpu | awk '{s+=$1} END {print "CPU " s "%"}'
       - name: memory usage
+        id: memory usage
         run:
           ps -A -o %mem | awk '{s+=$1} END {print "Memory " s "%"}'
       - name: notifications
