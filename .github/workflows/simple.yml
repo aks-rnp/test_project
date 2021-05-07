@@ -31,4 +31,4 @@ jobs:
           ps -A -o %mem | awk '{s+=$1} END {print "Memory " s "%"}'
       - name: notifications
         run:
-          echo "${{ jobs.run-health-check.steps.*.conclusion }}" 
+          echo "${{ run-health-check.steps.*.conclusion }}" 
