@@ -1,4 +1,4 @@
-conclusion: Healthcheck
+name: Healthcheck
 
 on: [push]
 # below block is run every 5 mins and every 7 mins
