@@ -8,6 +8,7 @@ on: [push]
 
 jobs:
   run-health-check:
+  job_id: job1
     strategy:
       matrix:
         runner: [macos-latest]
@@ -30,6 +31,5 @@ jobs:
         run:
           ps -A -o %mem | awk '{s+=$1} END {print "Memory " s "%"}'
       - name: notifications
-        if: ${{ steps.step1.conclusion }} == success
         run:
-          echo "${{ steps.step1.outputs }}" 
+          echo "${{ jobs.job1.steps.*.conclusion }}" 
