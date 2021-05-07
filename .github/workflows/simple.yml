@@ -1,4 +1,4 @@
-name: Healthcheck
+conclusion: Healthcheck
 
 on: [push]
 # below block is run every 5 mins and every 7 mins
@@ -31,12 +31,4 @@ jobs:
           ps -A -o %mem | awk '{s+=$1} END {print "Memory " s "%"}'
       - name: notifications
         env:
-          Step_1: ${{ steps.step1.name}}
-          Step_2: ${{ steps.step2.name}}
-          Step_3: ${{ steps.step3.name}}
-          Step_4: ${{ steps.step4.name}}
-        run: |
-          echo "${{ env.Step1 }}"
-          echo "${{ env.Step2 }}"
-          echo "${{ env.Step3 }}"
-          echo "${{ env.Step4 }}"
+          Steps_Contexts: ${{ toJSON(steps) }}
