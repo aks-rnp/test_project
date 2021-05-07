@@ -34,4 +34,4 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           Steps_Contexts: ${{ toJSON(steps) }}
         run: |
-          POST ${SLACK_WEBHOOK} Content-type: application/json { "text": "My First Post" }
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"Allow me to reintroduce myself!"}' ${SLACK_WEBHOOK}
