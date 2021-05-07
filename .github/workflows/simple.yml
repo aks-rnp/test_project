@@ -22,11 +22,11 @@ jobs:
         run:
           du -hH -d 1 ~/Library/Developer
       - name: cpu usage
-        id: cpu usage
+        id: cpu_usage
         run:
           ps -A -o %cpu | awk '{s+=$1} END {print "CPU " s "%"}'
       - name: memory usage
-        id: memory usage
+        id: memory_usage
         run:
           ps -A -o %mem | awk '{s+=$1} END {print "Memory " s "%"}'
       - name: notifications
