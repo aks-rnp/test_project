@@ -12,18 +12,18 @@ jobs:
       matrix:
         runner: [macos-latest]
     runs-on: ${{ matrix.runner }}
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
     steps:
       - name: desktop disk-usage 
         id: ddu
         run: |
           du -hH -d 1 ~/Desktop
-          echo "::set-output name=desktop_disk_usage::$(steps.ddu.conclusion)"
         if: ${{ always() }}
       - name: Library disk-usage
         id: LDU
         run: |
           du -hH -d 1 ~/Library/Developer
-          echo "::set-output name=Librarcy_disk_usage::$(steps.ldu.conclusion)"
         if: ${{ always() }}
       - name: cpu usage
         id: cpu
@@ -35,10 +35,12 @@ jobs:
         run:
           ps -A -o %mem | awk '{s+=$1} END {print "Memory " s "%"}'
         if: ${{ always() }}
-      - name: Post Notifications
-        id: post_notification   
-        run: |
-          echo "Completed"
+      - name: Slack_notification
+        uses: act10ns/slack@v1
+          with: 
+            status: ${{ job.status }}
+            steps: ${{ toJson(steps) }}
+        if: always()
 
 
           
