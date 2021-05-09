@@ -17,19 +17,23 @@ jobs:
         id: desktop_disk_usage
         run:
           du -hH -d 1 ~/Desktop
+        if: {{ always }}
       - name: Library disk-usage
         id: Library_disk_usage
         run:
           du -hH -d 1 ~/Library/Developer
+        if: {{ always }}
       - name: cpu usage
         id: cpu_usage
         run:
           ps -A -o %cpu | awk '{s+=$1} END {print "CPU " s "%"}'
+        if: {{ always }}
       - name: memory usage
         id: memory_usage
         run:
           ps -A -o %mem | awk '{s+=$1} END {print "Memory " s "%"}'
+        if: {{ always }}
       - name: Post Notifications
         id: post_notification
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '${{ toJSON(steps) }}' ${{ secrets.SLACK_WEBHOOK }}
+          curl -X POST -H 'Content-type: application/json' --data '{${{ steps.desktop_disk_usage.name }}:${{ steps.desktop_disk_usage.conclusion }}' ${{ secrets.SLACK_WEBHOOK }}
