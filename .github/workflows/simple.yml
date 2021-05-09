@@ -16,22 +16,20 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
     steps:
       - name: desktop disk-usage 
-        id: ddu
+        id: desktop-disk-usage
         run: |
           du -hH -d 1 ~/Desktop
         if: ${{ always() }}
       - name: Library disk-usage
-        id: LDU
+        id: Library disk-usage
         run: |
           du -hH -d 1 ~/Library/Developer
         if: ${{ always() }}
       - name: cpu usage
-        id: cpu
         run:
           ps -A -o %cpu | awk '{s+=$1} END {print "CPU " s "%"}'
         if: ${{ always() }}
       - name: memory usage
-        id: memu
         run:
           ps -A -o %mem | awk '{s+=$1} END {print "Memory " s "%"}'
         if: ${{ always() }}
