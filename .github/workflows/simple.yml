@@ -17,22 +17,22 @@ jobs:
         id: desktop_disk_usage
         run:
           du -hH -d 1 ~/Desktop
-        if: {{ always }}
+        if: ${{ always }}
       - name: Library disk-usage
         id: Library_disk_usage
         run:
           du -hH -d 1 ~/Library/Developer
-        if: {{ always }}
+        if: ${{ always }}
       - name: cpu usage
         id: cpu_usage
         run:
           ps -A -o %cpu | awk '{s+=$1} END {print "CPU " s "%"}'
-        if: {{ always }}
+        if: ${{ always }}
       - name: memory usage
         id: memory_usage
         run:
           ps -A -o %mem | awk '{s+=$1} END {print "Memory " s "%"}'
-        if: {{ always }}
+        if: ${{ always }}
       - name: Post Notifications
         id: post_notification
         run: |
