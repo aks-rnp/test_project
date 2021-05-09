@@ -35,5 +35,10 @@ jobs:
         if: ${{ always() }}
       - name: Post Notifications
         id: post_notification
+        env:
+          step1: {${{ steps.desktop_disk_usage.name }}
+          step1_conc: ${{ steps.desktop_disk_usage.conclusion }}
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{${{ steps.desktop_disk_usage.name }}:${{ steps.desktop_disk_usage.conclusion }}' ${{ secrets.SLACK_WEBHOOK }}
+          echo "step1"
+          echo "step1_conc"
+          curl -X POST -H 'Content-type: application/json' --data '{${step1}:${step1_conc}' ${{ secrets.SLACK_WEBHOOK }}
