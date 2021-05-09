@@ -36,11 +36,7 @@ jobs:
       - name: Post Notifications
         id: post_notification
         env:
-          step1: ${{ jobs.run-health-check.steps.desktop_disk_usage.name }}
-          step1_conc: ${{ jobs.run-health-check.steps.desktop_disk_usage.conclusion }}
           STEPS_CONTEXT: ${{ toJsaon(steps) }}          
         run: |
-          echo "${step1}"
-          echo "${step1_conc}"
           echo "${STEPS_CONTEXT}"
           
