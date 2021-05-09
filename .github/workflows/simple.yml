@@ -12,8 +12,6 @@ jobs:
       matrix:
         runner: [macos-latest]
     runs-on: ${{ matrix.runner }}
-    outputs:
-      RESULT: ${{ toJson(steps) }}
     steps:
       - name: desktop disk-usage 
         id: desktop_disk_usage
@@ -36,8 +34,11 @@ jobs:
           ps -A -o %mem | awk '{s+=$1} END {print "Memory " s "%"}'
         if: ${{ always() }}
       - name: Post Notifications
-        id: post_notification      
+        id: post_notification
+        env:
+          Job_status: ${{ job.status }}      
         run: |
-          echo "${outputs.RESULT}"
+          echo "${job.status}"
+          echo "${job_status}"
 
           
