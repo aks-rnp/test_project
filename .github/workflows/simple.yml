@@ -15,13 +15,15 @@ jobs:
     steps:
       - name: desktop disk-usage 
         id: ddu
-        run:
+        run: |
           du -hH -d 1 ~/Desktop
+          echo "::set-output name=desktop_disk_usage::$(steps.ddu.conclusion)"
         if: ${{ always() }}
       - name: Library disk-usage
         id: LDU
-        run:
+        run: |
           du -hH -d 1 ~/Library/Developer
+          echo "::set-output name=Librarcy_disk_usage::$(steps.ldu.conclusion)"
         if: ${{ always() }}
       - name: cpu usage
         id: cpu
@@ -36,7 +38,7 @@ jobs:
       - name: Post Notifications
         id: post_notification   
         run: |
-          echo "${{ job.steps.ddu.conclusion }}"
+          echo "Completed"
 
 
           
