@@ -36,7 +36,7 @@ jobs:
       - name: Post Notifications
         id: post_notification
         env:
-          step1: {${{ steps.desktop_disk_usage.name }}
+          step1: ${{ steps.desktop_disk_usage.name }}
           step1_conc: ${{ steps.desktop_disk_usage.conclusion }}
         run: |
           echo "step1"
