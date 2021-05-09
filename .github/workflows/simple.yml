@@ -14,31 +14,29 @@ jobs:
     runs-on: ${{ matrix.runner }}
     steps:
       - name: desktop disk-usage 
-        id: desktop_disk_usage
+        id: ddu
         run:
           du -hH -d 1 ~/Desktop
         if: ${{ always() }}
       - name: Library disk-usage
-        id: Library_disk_usage
+        id: LDU
         run:
           du -hH -d 1 ~/Library/Developer
         if: ${{ always() }}
       - name: cpu usage
-        id: cpu_usage
+        id: cpu
         run:
           ps -A -o %cpu | awk '{s+=$1} END {print "CPU " s "%"}'
         if: ${{ always() }}
       - name: memory usage
-        id: memory_usage
+        id: memu
         run:
           ps -A -o %mem | awk '{s+=$1} END {print "Memory " s "%"}'
         if: ${{ always() }}
       - name: Post Notifications
-        id: post_notification
-        env:
-          Job_status: ${{ job.status }}      
+        id: post_notification   
         run: |
-          echo "${job.status}"
-          echo "${job_status}"
+          echo "${{ job.steps.ddu.conclusion }}"
+
 
           
