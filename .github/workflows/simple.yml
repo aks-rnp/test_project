@@ -40,5 +40,5 @@ jobs:
           STEP_1: ${{ job.steps.desktop_disk_usage.name }}        
         run: |
           echo "${STEPS_CONTEXT}"
-          echo "${STEP_1}"
+          curl -X POST -H 'Content-type: application/json' --data '{"${STEPS_CONTEXT}"}' YOUR_WEBHOOK_URL
           
