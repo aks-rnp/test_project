@@ -36,7 +36,9 @@ jobs:
       - name: Post Notifications
         id: post_notification
         env:
-          STEPS_CONTEXT: ${{ toJsaon(steps) }}          
+          STEPS_CONTEXT: ${{ toJson(steps) }}  
+          STEP_1: ${{ job.steps.desktop_disk_usage.name }}        
         run: |
           echo "${STEPS_CONTEXT}"
+          echo "${STEP_1}"
           
