@@ -20,8 +20,8 @@ jobs:
         run: |
           du -hH -d 1 ~/Desktop
         if: ${{ always() }}
-      - name: Library-disk-usage
-        id: Library disk-usage
+      - name: Library disk-usage
+        id: Library-disk-usage
         run: |
           du -hH -d 1 ~/Library/Developer
         if: ${{ always() }}
