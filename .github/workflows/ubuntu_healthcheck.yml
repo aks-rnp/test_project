@@ -17,24 +17,24 @@ jobs:
         id: Disk-usage
         run: |
           df -h
-        if: {{ always() }}
+        if: ${{ always() }}
       - name: Runner_disk_usage
         id: Runner_disk_usage
         run: |
           du -hH -d 0 ~/actions-runners/OrgWideRunner
-        if: {{ always() }}
+        if: ${{ always() }}
       - name: Free memory
         id: Free_memory
         run: |
           free -m
-        if: {{ always() }}
+        if: ${{ always() }}
       - name: Total_memory
         id: Total_memory
         run: |
           ps -A -o %mem | awk '{s+=$1} END {print "Memory " s "%"}'
-        if: {{ always() }}
+        if: ${{ always() }}
       - name: CPU_usage
         id: CPU_usage
         run: |
           ps -A -o %cpu | awk '{s+=$1} END {print "CPU " s "%"}'
-        if: {{ always() }}
+        if: ${{ always() }}
