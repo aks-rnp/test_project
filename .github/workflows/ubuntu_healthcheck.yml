@@ -14,27 +14,27 @@ jobs:
     runs-on: ${{ matrix.runner }}
     steps:
       - name: Disk-usage 
-        id: Disk-usage
+        id: disk-usage
         run: |
           df -h
         if: ${{ always() }}
-      - name: Runner_disk_usage
-        id: Runner_disk_usage
+      - name: OrgWideRunner_disk_usage
+        id: owrunner_disk_usage
         run: |
           du -hH -d 0 ~/actions-runners/OrgWideRunner
         if: ${{ always() }}
       - name: Free memory
-        id: Free_memory
+        id: free_memory
         run: |
           free -m
         if: ${{ always() }}
-      - name: Total_memory
-        id: Total_memory
+      - name: Memory_usage
+        id: memory_usage
         run: |
           ps -A -o %mem | awk '{s+=$1} END {print "Memory " s "%"}'
         if: ${{ always() }}
       - name: CPU_usage
-        id: CPU_usage
+        id: cpu_usage
         run: |
           ps -A -o %cpu | awk '{s+=$1} END {print "CPU " s "%"}'
         if: ${{ always() }}
