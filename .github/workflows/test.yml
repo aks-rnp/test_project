@@ -4,7 +4,7 @@ on: [push]
 
 
 jobs:
-  Purge Folders:
+  purge_Folders:
     strategy:
       matrix:
         runner: [macos-latest, ubuntu-latest]
