@@ -1,44 +1,23 @@
-name: test_ruby
+name: Purge folders older than 7 days
 
-on: 
-  workflow_dispatch:
-    inputs:
-      rubyVersion:
-        description: 'Ruby Version'
-        required: true
-        default: '2.6.6'
-      gemsVersion:
-        description: 'Gems Version'
-        required: true
-        default: '2.6.0'
-      installNewVersion:
-        description: 'Install New Ruby version'
-        required: true
-        default: 'No'  
+on: [push]
+
 
 jobs:
-  Installation:
-    runs-on: macos-latest
+  Purge Folders:
+    strategy:
+      matrix:
+        runner: [macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.runner }}
     steps:
-    - name: Install Brew
-      run: 
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    - name: Install rbenv
-      run: 
-        brew install rbenv
-    - name: Installing Ruby
-      run: 
-        rbenv install ${{ github.event.inputs.rubyVersion }}
-    - name: list existing ruby versions
-      run: 
-        rbenv versions
-    - name: Install different version of ruby
-      if: github.event.inputs.installNewVersion=='Yes'
-      run: |
-        rbenv install 3.0.1
-        rbenv versions
-      
-  
-     
-
-
+      - name: create directory
+        id: create_directory
+        run: |
+          mkdir -p ~/home/user/test1/test
+          mkdir -p ~/home/user/test2/test
+          mkdir -p ~/home/user/test3/test
+        if: ${{ always() }}
+      - name: Purge_folders_7_days
+        id: purge
+        run: |
+          find ~/home/user/* -mtime +7 -type d -exec rmdir {} \;
