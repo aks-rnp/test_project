@@ -13,9 +13,9 @@ jobs:
       - name: create directory
         id: create_directory
         run: |
-          mkdir -p ~/home/user/test1/test
-          mkdir -p ~/home/user/test2/test
-          mkdir -p ~/home/user/test3/test
+          mkdir -p /home/user/test1/test
+          mkdir -p /home/user/test2/test
+          mkdir -p /home/user/test3/test
         if: ${{ always() }}
       - name: Purge_folders_7_days
         id: purge
