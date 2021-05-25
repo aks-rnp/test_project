@@ -13,11 +13,11 @@ jobs:
       - name: create directory
         id: create_directory
         run: |
-          mkdir -p /home/user/test1/test
-          mkdir -p /home/user/test2/test
-          mkdir -p /home/user/test3/test
+          sudo mkdir -p /home/user/test1/test
+          sudo mkdir -p /home/user/test2/test
+          sudo mkdir -p /home/user/test3/test
         if: ${{ always() }}
       - name: Purge_folders_7_days
         id: purge
         run: |
-          find ~/home/user/* -mtime +7 -type d -exec rmdir {} \;
+          sudo find ~/home/user/* -mtime +7 -type d -exec rmdir {} \;
