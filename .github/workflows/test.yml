@@ -10,7 +10,7 @@ jobs:
         runner: [macos-latest, ubuntu-latest]
     runs-on: ${{ matrix.runner }}
     steps:
-      - name: create directory
+      - name: create_directory
         id: create_directory
         run: |
           sudo mkdir -p /home/user/test1/test
@@ -20,4 +20,6 @@ jobs:
       - name: Purge_folders_7_days
         id: purge
         run: |
-          sudo find ~/home/user/* -mtime +7 -type d -exec rmdir {} \;
+          find ~/home/user/* -type d -mtime +7 -exec rm -rf {} \;
+        if: ${{ always() }}
+
