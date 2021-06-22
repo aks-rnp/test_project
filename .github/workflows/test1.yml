@@ -1,0 +1,118 @@
+# test workflow for atb money
+
+name: container atb atb_money_20_test
+
+on:
+  push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:11.2-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: atb_money_20_test
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Install node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '10.16.2'
+
+      - name: Install Elixir
+        uses: actions/setup-elixir@v1
+        with:
+          otp-version: 22.x
+          elixir-version: 1.9.1
+
+      - name: Install Headless Chrome dependencies
+        run: |
+            sudo apt-get install -yq \
+            gconf-service libasound2 libatk1.0-0 libatk-bridge2.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \
+            libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 \
+            libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 \
+            libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates \
+            fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
+        
+      - name: Run Mix Commands
+        run: |
+          mix local.hex --force
+          mix local.rebar --force
+
+      - name: Restore mix cache
+        uses: actions/cache@v2
+        with:
+          key:
+            v3-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+            v3-mix-cache-{{ .Branch }}
+            v3-mix-cache
+      
+      - name: Restore build cache
+        uses: actions/cache@v2
+        with:
+          key:
+            v3-build-cache-{{ .Branch }}
+            v3-build-cache
+      
+      - name: Restore npm Cache
+        uses: actions/cache@v2
+        with:
+          key:
+            v3-npm-cache-{{ .Branch }}-{{ checksum "assets/package-lock.json" }}
+            v3-npm-cache-{{ .Branch }}
+            v3-npm-cache
+            
+      - name: Build dependencies
+        run: mix do deps.get, compile
+
+      - name: Build asset dependencies
+        run: |
+          cd assets
+          npm install
+
+      - name: Save Mix Cache
+        uses: actions/cache@v2
+        with:
+          key: 
+            v3-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+            v3-mix-cache-{{ .Branch }}
+            v3-mix-cache
+          path: deps
+
+      - name: Save build Cache
+        uses: actions/cache@v2
+        with:
+          key: 
+            v3-build-cache-{{ .Branch }}
+            v3-build-cache
+          path: _Build
+
+      - name: Save npm cache
+        uses: actions/cache@v2
+        with:
+          key: 
+            v3-npm-cache-{{ .Branch }}-{{ checksum "assets/package-lock.json" }}
+            v3-npm-cache-{{ .Branch }}
+            v3-npm-cache
+          path: assets/node_modules
+
+      - name: Wait for postgres db
+        run: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      - name: Check Elixir formatting
+        run: mix format --check-formatted --dry-run
+
+      - name: Run Frontend Test Suite
+        run: |
+          cd assets
+          npm run test
+            
+
