@@ -87,12 +87,26 @@ jobs:
           npm install
         if: ${{ always() }}
 
-      - name: Save Mix Cache
+      - name: Save Mix Cache A
         uses: actions/cache@v2
         with:
           key: 
             v3-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+          path: deps
+        if: ${{ always() }}
+
+      - name: Save Mix Cache
+        uses: actions/cache@v2
+        with:
+          key: 
             v3-mix-cache-{{ .Branch }}
+          path: deps
+        if: ${{ always() }}
+
+      - name: Save Mix Cache
+        uses: actions/cache@v2
+        with:
+          key: 
             v3-mix-cache
           path: deps
         if: ${{ always() }}
@@ -102,6 +116,13 @@ jobs:
         with:
           key: 
             v3-build-cache-{{ .Branch }}
+          path: _Build
+        if: ${{ always() }}
+
+      - name: Save build Cache
+        uses: actions/cache@v2
+        with:
+          key: 
             v3-build-cache
           path: _Build
         if: ${{ always() }}
@@ -111,7 +132,21 @@ jobs:
         with:
           key: 
             v3-npm-cache-{{ .Branch }}-{{ checksum "assets/package-lock.json" }}
+          path: assets/node_modules
+        if: ${{ always() }}
+
+      - name: Save npm cache
+        uses: actions/cache@v2
+        with:
+          key: 
             v3-npm-cache-{{ .Branch }}
+          path: assets/node_modules
+        if: ${{ always() }}
+
+      - name: Save npm cache
+        uses: actions/cache@v2
+        with:
+          key: 
             v3-npm-cache
           path: assets/node_modules
         if: ${{ always() }}
