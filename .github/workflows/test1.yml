@@ -26,12 +26,14 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '10.16.2'
+        if: ${{ always() }}
 
       - name: Install Elixir
         uses: actions/setup-elixir@v1
         with:
           otp-version: 22.x
           elixir-version: 1.9.1
+        if: ${{ always() }}
 
       - name: Install Headless Chrome dependencies
         run: |
@@ -41,11 +43,13 @@ jobs:
             libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 \
             libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates \
             fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
+        if: ${{ always() }}
         
       - name: Run Mix Commands
         run: |
           mix local.hex --force
           mix local.rebar --force
+        if: ${{ always() }}
 
       - name: Restore mix cache
         uses: actions/cache@v2
@@ -54,6 +58,7 @@ jobs:
             v3-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
             v3-mix-cache-{{ .Branch }}
             v3-mix-cache
+        if: ${{ always() }}
       
       - name: Restore build cache
         uses: actions/cache@v2
@@ -61,6 +66,7 @@ jobs:
           key:
             v3-build-cache-{{ .Branch }}
             v3-build-cache
+        if: ${{ always() }}
       
       - name: Restore npm Cache
         uses: actions/cache@v2
@@ -69,14 +75,17 @@ jobs:
             v3-npm-cache-{{ .Branch }}-{{ checksum "assets/package-lock.json" }}
             v3-npm-cache-{{ .Branch }}
             v3-npm-cache
+        if: ${{ always() }}
             
       - name: Build dependencies
         run: mix do deps.get, compile
+        if: ${{ always() }}
 
       - name: Build asset dependencies
         run: |
           cd assets
           npm install
+        if: ${{ always() }}
 
       - name: Save Mix Cache
         uses: actions/cache@v2
@@ -86,6 +95,7 @@ jobs:
             v3-mix-cache-{{ .Branch }}
             v3-mix-cache
           path: deps
+        if: ${{ always() }}
 
       - name: Save build Cache
         uses: actions/cache@v2
@@ -94,6 +104,7 @@ jobs:
             v3-build-cache-{{ .Branch }}
             v3-build-cache
           path: _Build
+        if: ${{ always() }}
 
       - name: Save npm cache
         uses: actions/cache@v2
@@ -103,16 +114,20 @@ jobs:
             v3-npm-cache-{{ .Branch }}
             v3-npm-cache
           path: assets/node_modules
+        if: ${{ always() }}
 
       - name: Wait for postgres db
         run: dockerize -wait tcp://localhost:5432 -timeout 1m
+        if: ${{ always() }}
 
       - name: Check Elixir formatting
         run: mix format --check-formatted --dry-run
+        if: ${{ always() }}
 
       - name: Run Frontend Test Suite
         run: |
           cd assets
           npm run test
+        if: ${{ always() }}
             
 
