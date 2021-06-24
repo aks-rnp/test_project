@@ -19,6 +19,8 @@ jobs:
         id: Desktop-disk-usage
         run: |
           du -hH -d 1 ~/Desktop
+          echo "::group::#Desktop Usage" >> log.md
+          echo "gh run view --job Desktop-disk-usage --log" >> log.md 
         if: ${{ always() }}
       - name: Library disk-usage
         id: Library-disk-usage
