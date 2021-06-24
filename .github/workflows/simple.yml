@@ -15,10 +15,14 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
     steps:
+      - name: checkout
+        uses: actions/checkout@v2
       - name: desktop disk-usage 
         id: Desktop-disk-usage
         run: |
           du -hH -d 1 ~/Desktop
+          cd ../../
+          vi log.md
           echo "::group::#Desktop Usage" >> log.md
           echo "gh run view --job Desktop-disk-usage --log" >> log.md 
         if: ${{ always() }}
